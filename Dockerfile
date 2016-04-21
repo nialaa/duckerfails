@@ -1,8 +1,8 @@
 FROM debian:jessie
 
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-RUN apt-get update && apt-get -y upgrade
-RUN apt-get install -y git
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh && \
+    apt-get update && apt-get -y upgrade && \
+    apt-get install -y git
 
 # add webupd8 repository
 RUN \
@@ -24,17 +24,10 @@ RUN \
     apt-get clean  && \
     rm -rf /var/lib/apt/lists/*
 
-
 # define default command
 CMD ["java"]
 
 # install nvm with wget
-RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-RUN . /etc/profile
-# RUN nvm install v5.7.0
-
-# preparing the environment
-RUN npm install phantom@latest 
-RUN npm install -g karma
-RUN npm install -g grunt-cli 
-
+RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash && \ 
+    source /root/.nvm/nvm.sh && \
+    nvm install v5.7.0
